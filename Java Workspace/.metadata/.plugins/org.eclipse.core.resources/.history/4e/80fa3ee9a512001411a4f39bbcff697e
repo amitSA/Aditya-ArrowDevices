@@ -1,0 +1,65 @@
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+
+
+public class TestFunctions {
+
+	public int totalTargetsCovered(String inputFileName)
+	{
+	
+		
+		BufferedReader in = null;
+		try {
+			String newLine  = System.getProperty("line.separator");
+			in = new BufferedReader(new FileReader(inputFileName));
+		
+			
+			int numTests = Integer.parseInt(in.read()+"");
+			int targetRange = Integer.parseInt(in.read()+"");
+			byte [] target  = new byte[targetRange/8];
+			int count = 0;
+			for(int i = 0;i<numTests;i++)
+			{
+				String [] temp = in.readLine().split(" ");
+				int [] splitArray = new int[temp.length];
+				for(int ip = 0;ip<temp.length;ip++)
+					splitArray[ip] = Integer.parseInt(temp[i]); 
+				for(int ip = 0;ip<splitArray[0];ip++)
+				{
+					int byteIndex = splitArray[ip+1]/8;
+					int byteNum = (byte)Math.pow(2,splitArray[ip+1]%8);
+					target[byteIndex] = (byte) (target[byteIndex]|byteNum); 
+				}
+				
+			}
+			
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		finally{
+			try {
+				if(in!=null)
+					in.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
+	public static void main(String[] args) 
+	{
+		
+
+	}
+
+}
