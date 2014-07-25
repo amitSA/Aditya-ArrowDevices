@@ -151,8 +151,8 @@ public class ProblemMaker {
 	public static void main(String[] args) 
 	{
 		ProblemMaker probMaker = new ProblemMaker();
-		probMaker.generateProblem(10,10,4,"InputRandom.txt");
-		probMaker.generateProblem(10,100,10,1,"InputPerc.txt");
+		//probMaker.generateProblem(10,10,4,"InputRandom.txt");
+		probMaker.generateProblem(10,100,10,1.0,"InputPerc.txt");
 	}
 }
 
