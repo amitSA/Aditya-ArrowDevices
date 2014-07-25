@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 public class ProblemMaker {
 
-	public static void generateProblem(int numTests,  
+	public void generateProblem(int numTests,  
 			                           int targetRange,  // range is 0 to targetRange
 			                           int maxEntriesPerTarget,
 			                           String fileName)
@@ -49,7 +49,7 @@ public class ProblemMaker {
 		
    }
 
-	public static void generateProblem(int numTests,  
+	public void generateProblem(int numTests,  
 								        int targetRange,  // range is 0 to targetRange
 								        int maxEntriesPerTarget,
 								        double perc,
@@ -150,9 +150,9 @@ public class ProblemMaker {
 	
 	public static void main(String[] args) 
 	{
-		
-		//generateProblem(10,10,4,"InputRandom.txt");
-		generateProblem(10,100,10,1,"InputPerc.txt");
+		ProblemMaker probMaker = new ProblemMaker();
+		probMaker.generateProblem(10,10,4,"InputRandom.txt");
+		probMaker.generateProblem(10,100,10,1,"InputPerc.txt");
 	}
 }
 
