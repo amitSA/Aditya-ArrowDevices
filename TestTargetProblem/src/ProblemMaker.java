@@ -139,21 +139,6 @@ public class ProblemMaker {
 		//System.out.println("");
 		/*for(int [] b : bGraph)
 			System.out.println(Arrays.toString(b));*/
-			
-
     }
 }
 
-/*
-ArrayList<int[]> testList = new ArrayList<int[]>();
-		ArrayList<Integer> numList = new ArrayList<Integer>();
-		for(int i = 0;i<targetSize;i++)
-			numList.add(i);
-		while(testList.size() < numTests)
-		{
-			if(percentReq == -1 || (targetSize-testList.size())/(targetSize)>=percentReq)
-			{
-				
-			}
-		}
-*/
