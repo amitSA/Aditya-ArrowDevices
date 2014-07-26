@@ -12,7 +12,7 @@ public class FunctionTester {
 	public int [] totalTargetsCovered(String inputFileName)
 	{
 		BufferedReader in = null;
-		int count = 0;
+		Target target = null;
 		int targetRange = -1;
 		try {
 			String newLine  = System.getProperty("line.separator");
@@ -22,7 +22,7 @@ public class FunctionTester {
 			int space = firstLine.indexOf(' ');
 			int numTests = Integer.parseInt(firstLine.substring(0,space));
 			targetRange = Integer.parseInt(firstLine.substring(space+1));
-			byte [] target  = new byte[targetRange/8 + 1];
+			target = new Target(targetRange);
 			for(int i = 0;i<numTests;i++)
 			{
 				String [] temp = in.readLine().split(" ");
@@ -30,15 +30,7 @@ public class FunctionTester {
 				for(int ip = 0;ip<temp.length;ip++)
 					splitArray[ip] = Integer.parseInt(temp[ip]); 
 				for(int ip = 0;ip<splitArray[0];ip++)
-				{
-					int byteIndex = splitArray[ip+1]/8;
-					int byteNum = (byte)Math.pow(2,splitArray[ip+1]%8);
-					byte byteAns = (byte)(target[byteIndex]|byteNum);
-					if(target[byteIndex] != byteAns){
-						target[byteIndex] = byteAns;
-						count++;
-					}
-				}
+					target.mark(splitArray[ip+1]);
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -53,6 +45,6 @@ public class FunctionTester {
 				e.printStackTrace();
 			}
 		}
-		return new int[]{count,targetRange};
+		return new int[]{target.getTargetsMarked(),targetRange};
 	}
 }
