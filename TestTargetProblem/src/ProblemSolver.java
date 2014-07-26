@@ -26,8 +26,16 @@ public class ProblemSolver {
 			ArrayList<ArrayList<int[]>> list = new ArrayList<ArrayList<int[]>>();
 			for(int i = 0;i<numTests;i++)
 			{
-				String line = in.readLine();
-				line.
+				String [] split = in.readLine().split(" ");
+				int [] splitLn = new int[split.length];
+				for(int ip = 0;ip<split.length;ip++)
+					splitLn[ip] = Integer.parseInt(split[ip]);
+				int numEntries = splitLn[0];
+				checkToExpandList(list,numEntries);
+				int [] temp = new int [numEntries];
+				for(int ip = 0;ip<splitLn.length-1;i++) //JUST CHANGE THIS TO IP<NUMENTRIES
+					temp[i] = splitLn[i+1];
+				list.get(numEntries).add(temp);
 			}
 			
 		} catch (FileNotFoundException e) {
@@ -48,10 +56,5 @@ public class ProblemSolver {
 	private void checkToExpandList(ArrayList<ArrayList<int[]>> list,int ind){
 		while(ind<=list.size()-1)
 			list.add(new ArrayList<int[]>());
-	}
-	
-	public static void main(String[] args) 
-	{
-		
 	}
 }

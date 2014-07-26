@@ -136,37 +136,13 @@ public class ProblemMaker {
 				e.printStackTrace();
 			}
 		}
-		
-		
-		System.out.println("");
-		//for(int [] b : bGraph)
-	//		System.out.println(Arrays.toString(b));
+		//System.out.println("");
+		/*for(int [] b : bGraph)
+			System.out.println(Arrays.toString(b));*/
 			
-		//System.out.println("count is : " + targFilled);
-		
-		
-		//YOU CAN RUN A CHECK TO SEE IF AVG GOES ABOVE MAXENTRIESPERTARGET
+
     }
-	
-	public static void main(String[] args) 
-	{
-		ProblemMaker probMaker = new ProblemMaker();
-		//probMaker.generateProblem(10,10,4,"InputRandom.txt");
-		probMaker.generateProblem(100,1000,10,1.0,"InputPerc.txt");
-	}
 }
-
-
-/*
-int numTests;
-int targetSize;
-int minEntriesPerTarget = 1;
-int maxEntriesPerTarget;
-int percentRequirement;  
-
-*/
-
-
 
 /*
 ArrayList<int[]> testList = new ArrayList<int[]>();

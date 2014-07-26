@@ -57,11 +57,11 @@ public class FunctionTester {
 	}
 	
 	
-	public static void main(String[] args) 
+	/*public static void main(String[] args) 
 	{
 		FunctionTester tester = new FunctionTester();
 		int [] targ = tester.totalTargetsCovered("inputPerc.txt");
 		System.out.println(targ[0] + "/" + targ[1] + " targets covered");
-	}
+	}*/
 
 }
