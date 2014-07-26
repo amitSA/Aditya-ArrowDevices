@@ -3,12 +3,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ProblemSolver {
 
 	public ProblemSolver(){};
 																			
-	public void solveProblem(String fileName)
+	public void solveProblem(String fileName,double perc)
 	{
 		BufferedReader in = null;
 		
@@ -32,25 +33,23 @@ public class ProblemSolver {
 					splitLn[ip] = Integer.parseInt(split[ip]);
 				int numEntries = splitLn[0];
 				checkToExpandList(list,numEntries);
-				int [] temp = new int [numEntries];
+				int [] temp = new int [numEntries];      //ALSO MAP THIS INT ARRAY WITH COPIED INT ARRAY AS WELL
 				for(int ip = 0;ip<splitLn.length-1;ip++) //JUST CHANGE THIS TO IP<NUMENTRIES
 					temp[ip] = splitLn[ip+1];
 				
 				//add the int[] to the sub arrraylist in reverse order, not at the end
-				list.get(list.size()-1-numEntries).add(temp);
+				list.get(numEntries).add(temp);
 			}
 			
-			System.out.println("");
+			/*System.out.println("");
 			for(int ip = 0;ip<list.size();ip++){
 				ArrayList<int[]> l = list.get(ip);
-				System.out.print(list.size()-ip + " Entries: ");
+				System.out.print(ip + " Entries: ");
 				for(int op = 0;op<l.size();op++){
-					int [] temp = l.get(op);
-					for(int up = 0;up<temp.length;up++)
-						System.out.print(temp[up] + " ");
+					System.out.print(Arrays.toString(l.get(op))+" . ");
 				}
 				System.out.println("");
-			}
+			}*/
 				
 			
 		} catch (FileNotFoundException e) {
@@ -74,5 +73,6 @@ public class ProblemSolver {
 	private void checkToExpandList(ArrayList<ArrayList<int[]>> list,int ind){
 		while(ind>list.size()-1)
 			list.add(new ArrayList<int[]>());
+		//System.out.println("list size: " + list.size() + "    ind: " + ind);
 	}
 }

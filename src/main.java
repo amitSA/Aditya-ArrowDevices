@@ -13,8 +13,6 @@ public class main {
 		int [] targ = tester.totalTargetsCovered(fileName2);
 		System.out.println(targ[0] + "/" + targ[1] + " targets covered");
 		
-		solver.solveProblem(fileName2);
-		
+		solver.solveProblem(fileName2,1.0);
 	}
-
 }
