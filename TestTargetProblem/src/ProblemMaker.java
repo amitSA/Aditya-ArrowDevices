@@ -71,7 +71,7 @@ public class ProblemMaker {
 			float offset = (avg-middAvg); //SHOULD WE ROUND?
 			int min = (int)(offset+middAvg+0.5), max = maxEntriesPerTarget;
 			min = Math.max(1,min);
-			System.out.println("avg: " + avg + "  offset: " + offset + "   min: " + min + "  max: " + max);
+			//System.out.println("avg: " + avg + "  offset: " + offset + "   min: " + min + "  max: " + max);
 			int [] bar = new int[(int)(Math.random()*(max-min+1))+min];
 			targFilled+=bar.length;
 			bGraph.add(bar);
@@ -139,8 +139,8 @@ public class ProblemMaker {
 		
 		
 		System.out.println("");
-		for(int [] b : bGraph)
-			System.out.println(Arrays.toString(b));
+		//for(int [] b : bGraph)
+	//		System.out.println(Arrays.toString(b));
 			
 		//System.out.println("count is : " + targFilled);
 		
@@ -152,7 +152,7 @@ public class ProblemMaker {
 	{
 		ProblemMaker probMaker = new ProblemMaker();
 		//probMaker.generateProblem(10,10,4,"InputRandom.txt");
-		probMaker.generateProblem(10,100,10,1.0,"InputPerc.txt");
+		probMaker.generateProblem(100,1000,10,1.0,"InputPerc.txt");
 	}
 }
 
