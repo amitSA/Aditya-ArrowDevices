@@ -14,5 +14,11 @@ public class main {
 		System.out.println(targ[0] + "/" + targ[1] + " targets covered");
 		
 		solver.solveProblem(fileName2,1.0);
+		
+
+		
 	}
+	
+	
+	 
 }
