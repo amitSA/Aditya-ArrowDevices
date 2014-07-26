@@ -5,12 +5,11 @@ public class main {
 		ProblemMaker probMaker = new ProblemMaker();
 		FunctionTester tester = new FunctionTester();
 		ProblemSolver solver = new ProblemSolver();
-		
 		String fileName1 = "InputRand.txt", fileName2 = "InputPerc.txt";
+		///////////////////////
 		
-		////	
 		probMaker.generateProblem(100,1000,10,1.0,fileName2);
-	    
+		
 		int [] targ = tester.totalTargetsCovered(fileName2);
 		System.out.println(targ[0] + "/" + targ[1] + " targets covered");
 		
