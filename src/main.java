@@ -8,7 +8,7 @@ public class main {
 		String fileName1 = "InputRand.txt", fileName2 = "InputPerc.txt";
 		///////////////////////
 		
-		//probMaker.generateProblem(10,10,3,1.0,fileName2);
+		probMaker.generateProblem(100,1000,10,0.7,fileName2);
 		
 		int [] targ = tester.totalTargetsCovered(fileName2);
 		System.out.println(targ[0] + "/" + targ[1] + " targets covered");
