@@ -33,10 +33,25 @@ public class ProblemSolver {
 				int numEntries = splitLn[0];
 				checkToExpandList(list,numEntries);
 				int [] temp = new int [numEntries];
-				for(int ip = 0;ip<splitLn.length-1;i++) //JUST CHANGE THIS TO IP<NUMENTRIES
-					temp[i] = splitLn[i+1];
-				list.get(numEntries).add(temp);
+				for(int ip = 0;ip<splitLn.length-1;ip++) //JUST CHANGE THIS TO IP<NUMENTRIES
+					temp[ip] = splitLn[ip+1];
+				
+				//add the int[] to the sub arrraylist in reverse order, not at the end
+				list.get(list.size()-1-numEntries).add(temp);
 			}
+			
+			System.out.println("");
+			for(int ip = 0;ip<list.size();ip++){
+				ArrayList<int[]> l = list.get(ip);
+				System.out.print(list.size()-ip + " Entries: ");
+				for(int op = 0;op<l.size();op++){
+					int [] temp = l.get(op);
+					for(int up = 0;up<temp.length;up++)
+						System.out.print(temp[up] + " ");
+				}
+				System.out.println("");
+			}
+				
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -51,10 +66,13 @@ public class ProblemSolver {
 				e.printStackTrace();
 			}
 		}
+		
+		
+		
 	}
 	
 	private void checkToExpandList(ArrayList<ArrayList<int[]>> list,int ind){
-		while(ind<=list.size()-1)
+		while(ind>list.size()-1)
 			list.add(new ArrayList<int[]>());
 	}
 }
