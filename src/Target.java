@@ -8,32 +8,44 @@ public class Target
 	
 	private int count;  //number of targets that have been hit, used a variable to hold it for efficiency
 	private byte [] target;
-	
-	public Target(int range)
-	{
+	private int range; 
+	public Target(int range){
+		this.range = range;
 		this.target = new byte[range/TYPE + 1];
 		this.count = 0;
 	}
+
+	//@pre stands for post condition
 	
-	/**
-	 * @pre targetNum must be be a target in the range passed into this objects constructor
-	 * @return returns true if the target at targetNum is now marked, returns false if it was allready marked    	
+	/**This method marks the target at targetNum if it has not been previously been marked.  If the 
+	 * target was not previously marked, then the targetMarkedCounter(simple named count) is also incremented
+	 * 
+	 * @pre targetNum must be be a target in the range passed into this objects constructor  	
 	 */
-	public boolean mark(int targetNum){
+	public void mark(int targetNum){
 		int byteIndex = targetNum/TYPE;
 		int byteNum = (byte)Math.pow(2,targetNum%TYPE);
-		byte byteAns = (byte)(target[byteIndex]|byteNum);
+		byte byteAns = (byte)(target[byteIndex]|byteNum); // binary or
 		if(target[byteIndex] != byteAns){
 			target[byteIndex] = byteAns;
 			count++;
-			return true;
 		}
-		return false;
+	}
+	
+	public boolean isMarked(int targetNum){
+		int byteIndex = targetNum/TYPE;
+		int byteNum = (byte)Math.pow(2,targetNum%TYPE);
+		byte byteAns = (byte)(target[byteIndex]|byteNum); // binary or
+		return (target[byteIndex] == byteAns);
 	}
 	
 	
 	public int getTargetsMarked(){
 		return count;
+	}
+	
+	public int getTargetRange(){
+		return range;
 	}
 	
 }
