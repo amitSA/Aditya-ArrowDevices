@@ -11,29 +11,34 @@ public class main {
 		ProblemSolver solver = new ProblemSolver();
 		String fileName1 = "InputRand.txt", fileName2 = "InputPerc.txt";
 		
-		//////MODIFY THIS VALUE/////
-		double perc = 0.8;
+		//////MODIFY THESE VALUES /////
+		double percInDataSet = 1.0;   // this is the minimum percentage of targets that will be covered by the tests 
+		double percToFind = 0.8;      // the minimum amount of tests needed to cover *this percentage* of targets  
+		int targetRange = 10000;      // the target range will be 1 to THISVARIABLE
+		int numTests = 1000;
+		int maxEntriesPerTest = 10;   // the tests can map to 1 to THISVARIABLE targets apiece
 		////////////////////////////
 		
-		probMaker.generateProblem(1000,10000,10,perc,fileName2);
+		probMaker.generateProblem(numTests,targetRange,maxEntriesPerTest,percInDataSet,fileName2);
 		
 		int [] targ = tester.totalTargetsCovered(fileName2);
 		System.out.println(targ[0] + "/" + targ[1] + " targets covered");
 		
 		
-		ArrayList<int[]> answerSet = solver.solveProblem(fileName2,perc);	
+		ArrayList<int[]> answerSet = solver.solveProblem(fileName2,percToFind);	
 		
 		System.out.println("");
+		String s = "";
 		if(answerSet == null)
-			System.out.println("The data set did not have enough elements to fill " + (perc*100) + "% of targets");
+			s += "The data set did not have enough elements to fill " + (percToFind*100) + "% of targets\n";
 		else{
-			System.out.println("The tests which map to at least " + (perc*100) + "% targets are:");
+			s += "The tests which map to at least " + (percToFind*100) + "% of the targets are:\n\n";
 			for(int [] a : answerSet)
-				System.out.println(Arrays.toString(a));
-		}
-			
-		System.out.println("\nTotal of " + answerSet.size() + " sets printed");
+				s += Arrays.toString(a) + "\n";
+			s+="\nTotal of " + answerSet.size() + " sets printed";
+		}	
 		
+		tester.writeToFile("solution.txt", s);
 	}
 	
 	

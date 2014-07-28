@@ -3,9 +3,12 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 public class FunctionTester {
 
+	//empty constructor(this object's only purpose is to call its indepenent functions)
+	public FunctionTester(){};
 	
 	/** @return a 2 elemeent int array where [0] = targets covered and [1] = total number of targets in set
 	 */
@@ -46,5 +49,18 @@ public class FunctionTester {
 			}
 		}
 		return new int[]{target.getTargetsMarked(),targetRange};
+	}
+
+	public void writeToFile(String fileName, String data){
+		PrintWriter out = null;
+		try {
+			out = new PrintWriter(fileName);
+			out.write(data);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		finally{
+			out.close();
+		}
 	}
 }
