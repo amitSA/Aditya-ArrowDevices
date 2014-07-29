@@ -1,4 +1,5 @@
 import java.awt.Dimension;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -6,11 +7,18 @@ import java.util.HashMap;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.plaf.FontUIResource;
 
 
 public class main {
 
 	public static void main(String[] args) {
+		UIManager.put("ToolTip.font",
+				new FontUIResource("SansSerif", Font.BOLD, 18));
+		
+
+		
 		MessagePanel messPanel = new MessagePanel();
 		JOptionPane optionPane = new JOptionPane(messPanel,
 				                                JOptionPane.PLAIN_MESSAGE,
