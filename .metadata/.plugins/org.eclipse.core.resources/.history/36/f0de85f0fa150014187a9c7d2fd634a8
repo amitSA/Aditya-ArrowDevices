@@ -1,0 +1,27 @@
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+
+import javax.swing.JFileChooser;
+
+
+public class TestMain {
+
+	public static void main(String[] args) {
+		File file = new File("InputPerc.txt");
+		JFileChooser fileChooser = new JFileChooser(file);
+		int uInput = fileChooser.showOpenDialog(null);
+		Desktop dt = Desktop.getDesktop();
+		if(uInput == 0 && Desktop.getDesktop().isDesktopSupported()){
+			File f = fileChooser.getSelectedFile();
+			Desktop dt;
+			try {
+				dt.open(f);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+}
