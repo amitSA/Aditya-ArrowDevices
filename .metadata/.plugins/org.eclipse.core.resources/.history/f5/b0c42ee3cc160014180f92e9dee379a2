@@ -1,0 +1,14 @@
+import java.awt.BorderLayout;
+import javax.swing.JPanel;
+
+
+public class MessagePanel extends JPanel
+{
+	
+	public MessagePanel(){
+		super();
+		
+		JPanel supPanel = new JPanel(new BorderLayout());
+	}
+	
+}
