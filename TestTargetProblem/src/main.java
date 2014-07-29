@@ -2,11 +2,33 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+
 
 public class main {
 
 	public static void main(String[] args) {
-		ProblemMaker probMaker = new ProblemMaker();
+		MessagePanel messPanel = new MessagePanel();
+		JOptionPane optionPane = new JOptionPane(messPanel,
+				                                JOptionPane.PLAIN_MESSAGE,
+				                                JOptionPane.DEFAULT_OPTION,
+				                                null,
+				                                new Object[]{},
+				                                0);
+		JDialog dialog = new JDialog();
+		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		dialog.setContentPane(optionPane);
+		dialog.setModal(false);
+		dialog.setVisible(true);
+		dialog.pack();
+	}
+		
+	 
+}
+
+/*
+ProblemMaker probMaker = new ProblemMaker();
 		FunctionTester tester = new FunctionTester();
 		ProblemSolver solver = new ProblemSolver();
 		String fileName1 = "InputRand.txt", fileName2 = "InputPerc.txt";
@@ -39,14 +61,4 @@ public class main {
 		}	
 		
 		tester.writeToFile("solution.txt", s);
-	}
-	
-	
-	 
-}
-
-/*
- * HashMap<Integer,StringBuffer> map = new HashMap<Integer,StringBuffer>();
-		StringBuffer buf = new StringBuffer("Trollololol");
-		map.put(1,buf);
-		System.out.println(map.get(1));*/
+	}*/
