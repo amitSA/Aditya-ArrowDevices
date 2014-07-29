@@ -1,0 +1,17 @@
+import java.util.ArrayList;
+
+
+
+public class Target 
+{
+	public static final int TYPE
+	
+	private int count;  //number of targets that have been hit, used a variable to hold it for efficiency
+	private byte [] target;
+	
+	public Target(int range)
+	{
+		
+	}
+	
+}

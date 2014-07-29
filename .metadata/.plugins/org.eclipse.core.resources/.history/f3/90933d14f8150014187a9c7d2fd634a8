@@ -1,0 +1,16 @@
+import java.io.File;
+
+import javax.swing.JFileChooser;
+
+
+public class TestMain {
+
+	public static void main(String[] args) {
+		File file = new File("InputPerc.txt");
+		JFileChooser fileChooser = new JFileChooser(file);
+		JPanel panel = new JPanel();
+		int uInput = fileChooser.showOpenDialog(null);
+		System.out.println(uInput);
+	}
+
+}
