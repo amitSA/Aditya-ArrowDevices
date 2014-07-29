@@ -14,10 +14,11 @@ public class MessagePanel extends JPanel
 		
 		JTabbedPane tabs = new JTabbedPane();
 		
-		JPanel genPanel = new GeneratePanel();
-		JPanel solvePanel = new SolvePanel();
+		JPanel genPanel = new JPanel();
+		JPanel solvePanel = new JPanel();
 		
-		
+		genPanel.add(new JButton("sdfsdfsdf"));
+		genPanel.add(new JButton("dsfsdfsdfdsf"));
 		
 		
 		tabs.addTab("<html><body marginwidth=15 marginheight=5><h2>Generate</h2></body></html>",genPanel);

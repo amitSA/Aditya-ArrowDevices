@@ -38,7 +38,6 @@ public class GeneratePanel extends JPanel
 			//add the JLabels then the JTextArea
 			p.add(labels[i]);
 			p.add(textFields[i]);
-			panelGroups[i] = p;
 		}
 		
 		GridBagConstraints c = new GridBagConstraints();
