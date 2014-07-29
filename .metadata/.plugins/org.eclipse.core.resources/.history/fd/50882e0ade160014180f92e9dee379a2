@@ -1,0 +1,22 @@
+import java.awt.BorderLayout;
+
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+
+
+public class MessagePanel extends JPanel
+{
+	
+	public MessagePanel(){
+		super();
+		
+		JPanel supPanel = new JPanel(new BorderLayout());
+		JTabbedPane tabs = new JTabbedPane();
+		
+		JPanel generatePanel = new JPanel();
+		JPanel solvePanel = new JPanel();
+		
+		supPanel.add(tabs,BorderLayout.CENTER);
+	}
+	
+}

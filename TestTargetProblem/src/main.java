@@ -1,8 +1,10 @@
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 
@@ -16,13 +18,19 @@ public class main {
 				                                null,
 				                                new Object[]{},
 				                                0);
-		JDialog dialog = new JDialog();
-		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		dialog.setContentPane(optionPane);
-		dialog.setModal(false);
-		dialog.setVisible(true);
-		dialog.pack();
+		
+	
+		JFrame frame = new JFrame("TestTargetProblem");
+		frame.add(messPanel);
+		
+		frame.setResizable(true);
+		frame.setVisible(true);
+		frame.pack();
+		
+		frame.setLocationRelativeTo(null);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
+	
 		
 	 
 }
@@ -49,6 +57,8 @@ ProblemMaker probMaker = new ProblemMaker();
 		
 		ArrayList<int[]> answerSet = solver.solveProblem(fileName2,percToFind);	
 		
+		USE STRING BUFFER
+		
 		System.out.println("");
 		String s = "";
 		if(answerSet == null)
@@ -62,3 +72,14 @@ ProblemMaker probMaker = new ProblemMaker();
 		
 		tester.writeToFile("solution.txt", s);
 	}*/
+
+/*JFrame frame = new JFrame("Particle System");
+frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+frame.setResizable(true);
+
+GamePanel gamePanel = new GamePanel();
+frame.add(gamePanel);
+
+frame.setVisible(true);
+frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+*/
