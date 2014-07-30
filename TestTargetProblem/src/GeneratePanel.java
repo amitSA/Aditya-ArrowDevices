@@ -1,17 +1,26 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -25,10 +34,15 @@ public class GeneratePanel extends JPanel
 	JButton genButton;
 	JButton openButton;
 	JTextField fileNameField;
+	JSlider numberLine;
+	
+	ProblemMaker probMaker;
 	
 	public GeneratePanel(){
 		super(new GridBagLayout());
 	
+		probMaker = new ProblemMaker();
+		
 	/*SHOULD I ADD PANELGROUPS INTO THIS PANEL(because of the effects this panels LayoutManager can cause)	
 	 * OR SHOULD I ADD THE JLABELS AND TEXTFIELDS SEPARATELY
 	 */
@@ -40,10 +54,13 @@ public class GeneratePanel extends JPanel
 		textFields = tempField;
 		
 		cBox = new JCheckBox("Set Minimum Percentage");
+		cBox.addItemListener(new CheckedButtonHandler());
 		
 		genButton = new JButton("Generate");
+		genButton.addActionListener(new GenerateButtonHandler());
 		openButton = new JButton("Open File");
 		openButton.setEnabled(false);
+		openButton.addActionListener(new OpenButtonHandler());
 		
 		fileNameField = new JTextField("input.txt");
 		fileNameField.setEditable(false);
@@ -52,11 +69,20 @@ public class GeneratePanel extends JPanel
 		JLabel outputTo = new JLabel("Output to  ",JLabel.RIGHT);
 		outputTo.setForeground(Color.GRAY);
 		
+		numberLine = new JSlider(0,100);
+		numberLine.setMajorTickSpacing(10);
+		numberLine.setPaintLabels(true);
+		numberLine.setPaintTicks(true);
+		numberLine.setPreferredSize(new Dimension(100,43));
+		numberLine.setVisible(false);
+		
 		for(int i = 0;i<3;i++){
 			textFields[i].setColumns(7);
 			labels[i].setToolTipText("Sdfsdf");
 			tempField[i].setToolTipText("Sdfsdf");
 		}
+		
+		
 		
 		
 		
@@ -81,9 +107,17 @@ public class GeneratePanel extends JPanel
 		c.gridx = 0;
 		this.add(cBox,c);
 		//the numberline will be at row 4 and can span 2 rows
+		c.gridy = 4;
+		c.gridheight = 2;
+		c.gridwidth = 8;
+		c.gridx = 0;
+		this.add(numberLine,c);
 		
+		
+		c.gridheight = 1;
 		c.gridy = 7;
 		c.gridwidth = 1;
+		c.gridx = 0;
 		this.add(genButton,c);
 		c.gridx = 2;
 		Insets oldIns = c.insets;
@@ -103,6 +137,67 @@ public class GeneratePanel extends JPanel
 		c.gridwidth = 1;
 		c.gridx = 0;
 		this.add(openButton,c);
+		
+	}
+
+	//extension of the constructor(thats why its private)
+	private void attachListeners() {
+		
+	}
+	
+	
+	class GenerateButtonHandler implements ActionListener{
+		//the "Generate" button has been clicked
+		public void actionPerformed(ActionEvent e) {
+			String [] array = {textFields[0].getText(),textFields[1].getText(),textFields[2].getText()};
+			for(String s:array){
+				for(int ip = 0;ip<s.length();ip++){
+					if(!Character.isDigit(s.charAt(ip))){
+						String mess = "Make sure only numbers are inputed into the text fields";
+						JOptionPane.showMessageDialog(null, mess,"Invalid Input",JOptionPane.ERROR_MESSAGE,null);
+						return;
+					}	
+				}
+			}
+			int targetRange = Integer.parseInt(array[0]);
+			int numTests = Integer.parseInt(array[1]);
+			int numConn = Integer.parseInt(array[2]);
+			String fileName = fileNameField.getText();
+			genButton.setEnabled(false);
+			if(!cBox.isSelected()){
+				probMaker.generateProblem(numTests, targetRange, numConn, fileName);
+				openButton.setEnabled(true);
+			}else{
+			    String err = "Not enough tests to cover the specified percentage of targets.  \n"
+			    		   + "Make sure that    NumberofTests*ConnPerTests >= TargetRange";
+			    double perc = numberLine.getValue()/100.0;
+				if(probMaker.generateProblem(numTests, targetRange, numConn, perc, fileName))
+					openButton.setEnabled(true);
+				else
+					JOptionPane.showMessageDialog(null, err,"Invalid Input",JOptionPane.ERROR_MESSAGE,null);
+			}
+			genButton.setEnabled(true);	
+		}
+	}
+	class CheckedButtonHandler implements ItemListener{
+		//every time the CheckedBox is toggled
+		public void itemStateChanged(ItemEvent e) {
+			numberLine.setVisible(!numberLine.isVisible());
+		}
+	}
+	class OpenButtonHandler implements ActionListener{
+		//this method is called every time the "Open File" button is clicked
+		public void actionPerformed(ActionEvent e) {
+			if(Desktop.isDesktopSupported()){
+				File f = new File(fileNameField.getText());
+				Desktop dt = Desktop.getDesktop();
+				try {
+					dt.open(f);
+				} catch (IOException ex) {
+					ex.printStackTrace();
+				}
+			}
+		}
 		
 	}
 }

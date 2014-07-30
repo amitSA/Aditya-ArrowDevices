@@ -8,7 +8,10 @@ import java.util.Arrays;
 
 public class ProblemMaker {
 
-	public void generateProblem(int numTests,  
+	/**
+	 * @return returns false if a problem was successfully generated, false if it was not
+	 */
+	public boolean generateProblem(int numTests,  
 			                           int targetRange,  // range is 0 to targetRange
 			                           int maxEntriesPerTarget,
 			                           String fileName)
@@ -35,8 +38,10 @@ public class ProblemMaker {
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+			return false;
 		} catch (IOException e) {
 			e.printStackTrace();
+			return false;
 		}
 		finally{
 			try {
@@ -46,17 +51,21 @@ public class ProblemMaker {
 				e.printStackTrace();
 			}
 		}
+		return true;
 		
    }
 
-	public void generateProblem(int numTests,  
+	/**
+	 * @return returns false if a problem was successfully generated, false if it was not
+	 */
+	public boolean generateProblem(int numTests,  
 								        int targetRange,  // range is 0 to targetRange
 								        int maxEntriesPerTarget,
 								        double perc,
 								        String fileName)
     {
 		if(maxEntriesPerTarget*numTests < (targetRange*perc))
-			throw new IllegalArgumentException("Not enough tests to cover the specified percentage of targets");
+			return false;
 	
 		//constants  CAPITALIZE THEM IF YOU WANT TO
   		float middAvg = (maxEntriesPerTarget+1)/2.0f;
@@ -125,8 +134,10 @@ public class ProblemMaker {
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+			return false;
 		} catch (IOException e) {
 			e.printStackTrace();
+			return false;
 		}
 		finally{
 			try {
@@ -136,9 +147,11 @@ public class ProblemMaker {
 				e.printStackTrace();
 			}
 		}
+		return true;
 		//System.out.println("");
 		/*for(int [] b : bGraph)
 			System.out.println(Arrays.toString(b));*/
     }
 }
 
+//throw new IllegalArgumentException("Not enough tests to cover the specified percentage of targets");
