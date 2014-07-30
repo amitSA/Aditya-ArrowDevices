@@ -8,7 +8,10 @@ import java.util.Arrays;
 
 public class ProblemMaker {
 
-	public static void generateProblem(int numTests,  
+	/**
+	 * @return returns false if a problem was successfully generated, false if it was not
+	 */
+	public ArrayList<int[]> generateProblem(int numTests,  
 			                           int targetRange,  // range is 0 to targetRange
 			                           int maxEntriesPerTarget,
 			                           String fileName)
@@ -35,8 +38,10 @@ public class ProblemMaker {
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+			return false;
 		} catch (IOException e) {
 			e.printStackTrace();
+			return false;
 		}
 		finally{
 			try {
@@ -46,17 +51,21 @@ public class ProblemMaker {
 				e.printStackTrace();
 			}
 		}
+		return true;
 		
    }
 
-	public static void generateProblem(int numTests,  
+	/**
+	 * @return returns false if a problem was successfully generated, false if it was not
+	 */
+	public boolean generateProblem(int numTests,  
 								        int targetRange,  // range is 0 to targetRange
 								        int maxEntriesPerTarget,
 								        double perc,
 								        String fileName)
     {
 		if(maxEntriesPerTarget*numTests < (targetRange*perc))
-			throw new IllegalArgumentException("Not enough tests to cover the specified percentage of targets");
+			return false;
 	
 		//constants  CAPITALIZE THEM IF YOU WANT TO
   		float middAvg = (maxEntriesPerTarget+1)/2.0f;
@@ -71,7 +80,7 @@ public class ProblemMaker {
 			float offset = (avg-middAvg); //SHOULD WE ROUND?
 			int min = (int)(offset+middAvg+0.5), max = maxEntriesPerTarget;
 			min = Math.max(1,min);
-			System.out.println("avg: " + avg + "  offset: " + offset + "   min: " + min + "  max: " + max);
+			//System.out.println("avg: " + avg + "  offset: " + offset + "   min: " + min + "  max: " + max);
 			int [] bar = new int[(int)(Math.random()*(max-min+1))+min];
 			targFilled+=bar.length;
 			bGraph.add(bar);
@@ -84,11 +93,10 @@ public class ProblemMaker {
 			temp.add(b);    // this adds the reference of the int[] in bGraph to the temp arrayList
 		                    /* this way we can modify indices inside the int[] arrays in temp and they will be reflected in bGraph
 		                      although when we remove a int[] from temp, it will not be removed from bGraph */
-		int uniqTargetsFilled = 0;
 		while(temp.size() > 0){
 			int ranIndex = (int)(Math.random() * temp.size());
 			int ranTarg;
-			if(uniqTargetsFilled >= entriesNeeded)
+			if(numberLine.size() <= 0)
 				ranTarg = (int)(Math.random() * targetRange) + 1;
 			else{
 				int ind = (int)Math.random()*numberLine.size();
@@ -98,56 +106,52 @@ public class ProblemMaker {
 			int [] tArray = temp.get(ranIndex);
 			int i = 0;
 			for(;i<tArray.length;i++)
-				if(tArray[i]!=0){
+				if(tArray[i]==0){
 					tArray[i] = ranTarg;
 					break;
 				}
-				
+			if(i==tArray.length-1)
+				temp.remove(ranIndex);
 		}
 		
-		
-		
-		
-	/*	System.out.println("");
-		for(int [] b : bGraph)
-			System.out.println(Arrays.toString(b));
+		//writing to the file
+		BufferedWriter out = null;
+		try {
+			String newLine  = System.getProperty("line.separator");
+			out = new BufferedWriter(new PrintWriter(fileName));
+			out.write(numTests + " " + targetRange + newLine);
+			for(int i = 0;i<bGraph.size();i++){
+				int [] a = bGraph.get(i);
+				out.write(a.length + " ");
+				for(int ip= 0;ip<a.length;ip++){
+					out.write(a[ip]+"");
+					if(ip!=a.length-1)
+						out.write(" ");						
+				}
+				if(i != bGraph.size()-1)
+					out.write(newLine);
+			}
 			
-		System.out.println("count is : " + targFilled);*/
-		
-		
-		//YOU CAN RUN A CHECK TO SEE IF AVG GOES ABOVE MAXENTRIESPERTARGET
-    }
-	
-	public static void main(String[] args) 
-	{
-		
-		//generateProblem(10,10,4,"InputRandom.txt");
-		generateProblem(10,100,10,1,"InputPerc.txt");
-	}
-}
-
-
-/*
-int numTests;
-int targetSize;
-int minEntriesPerTarget = 1;
-int maxEntriesPerTarget;
-int percentRequirement;  
-
-*/
-
-
-
-/*
-ArrayList<int[]> testList = new ArrayList<int[]>();
-		ArrayList<Integer> numList = new ArrayList<Integer>();
-		for(int i = 0;i<targetSize;i++)
-			numList.add(i);
-		while(testList.size() < numTests)
-		{
-			if(percentReq == -1 || (targetSize-testList.size())/(targetSize)>=percentReq)
-			{
-				
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return false;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+		finally{
+			try {
+				if(out!=null)
+					out.close();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
-*/
+		return true;
+		//System.out.println("");
+		/*for(int [] b : bGraph)
+			System.out.println(Arrays.toString(b));*/
+    }
+}
+
+//throw new IllegalArgumentException("Not enough tests to cover the specified percentage of targets");
