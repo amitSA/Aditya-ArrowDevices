@@ -1,11 +1,8 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,10 +16,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JSlider;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class GeneratePanel extends JPanel
@@ -56,15 +50,15 @@ public class GeneratePanel extends JPanel
 		cBox = new JCheckBox("Set Minimum Percentage");
 		cBox.addItemListener(new CheckedButtonHandler());
 		
-		genButton = new JButton("Generate");
-		genButton.addActionListener(new GenerateButtonHandler());
-		openButton = new JButton("Open File");
-		openButton.setEnabled(false);
-		openButton.addActionListener(new OpenButtonHandler());
-		
 		fileNameField = new JTextField("input.txt");
 		fileNameField.setEditable(false);
 		fileNameField.setBackground(Color.WHITE);
+		
+		genButton = new JButton("Generate");
+		genButton.addActionListener(new GenerateButtonHandler());
+		openButton = new JButton("Open File");
+		openButton.setEnabled(doesFileExist(fileNameField.getText()));
+		openButton.addActionListener(new OpenButtonHandler(fileNameField));
 		
 		JLabel outputTo = new JLabel("Output to  ",JLabel.RIGHT);
 		outputTo.setForeground(Color.GRAY);
@@ -84,6 +78,7 @@ public class GeneratePanel extends JPanel
 		
 		
 		
+		JLabel lab = new JLabel("                                                  ");
 		
 		
 		GridBagConstraints c = new GridBagConstraints();
@@ -106,10 +101,13 @@ public class GeneratePanel extends JPanel
 		c.gridy = 3;
 		c.gridx = 0;
 		this.add(cBox,c);
+		c.gridx = 3;
+		c.gridwidth = 3;
+		this.add(lab,c);
 		//the numberline will be at row 4 and can span 2 rows
 		c.gridy = 4;
 		c.gridheight = 2;
-		c.gridwidth = 8;
+		c.gridwidth = 6;
 		c.gridx = 0;
 		this.add(numberLine,c);
 		
@@ -140,9 +138,12 @@ public class GeneratePanel extends JPanel
 		
 	}
 
-	//extension of the constructor(thats why its private)
-	private void attachListeners() {
-		
+	/** This method checks if a file of the fileName inputed exists
+	 * @return if  the file exists then the metod returns true, if it does not then the method returns false 
+	 */
+	private boolean doesFileExist(String fileName){
+		File file = new File(fileName);
+		return file.exists();
 	}
 	
 	
@@ -185,21 +186,7 @@ public class GeneratePanel extends JPanel
 			numberLine.setVisible(!numberLine.isVisible());
 		}
 	}
-	class OpenButtonHandler implements ActionListener{
-		//this method is called every time the "Open File" button is clicked
-		public void actionPerformed(ActionEvent e) {
-			if(Desktop.isDesktopSupported()){
-				File f = new File(fileNameField.getText());
-				Desktop dt = Desktop.getDesktop();
-				try {
-					dt.open(f);
-				} catch (IOException ex) {
-					ex.printStackTrace();
-				}
-			}
-		}
-		
-	}
+
 }
 
 /*JButton b = new JButton("Dont Click me");
