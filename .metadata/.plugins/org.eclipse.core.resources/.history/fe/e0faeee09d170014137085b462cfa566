@@ -181,7 +181,7 @@ public class GeneratePanel extends JPanel implements Tabable
 	}
 	
 	public void refresh() {
-		openButton.setEnabled(doesFileExist(fileNameField.getText()));
+		genButton.setEnabled(doesFileExist(fileNameField.getText()));
 	}
 
 	/** This method checks if a file of the fileName inputed exists

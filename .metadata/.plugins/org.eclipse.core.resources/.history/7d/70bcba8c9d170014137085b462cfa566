@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 
-public class GeneratePanel extends JPanel implements Tabable
+public class GeneratePanel extends JPanel
 {	
   //JPanel [] panelGroups;
 	JTextField [] textFields;
@@ -57,6 +57,7 @@ public class GeneratePanel extends JPanel implements Tabable
 		genButton = new JButton("Generate");
 		genButton.addActionListener(new GenerateButtonHandler());
 		openButton = new JButton("Open File");
+		openButton.setEnabled(doesFileExist(fileNameField.getText()));
 		openButton.addActionListener(new OpenButtonHandler(fileNameField));
 		
 		JLabel outputTo = new JLabel("Output to  ",JLabel.RIGHT);
@@ -137,7 +138,13 @@ public class GeneratePanel extends JPanel implements Tabable
 		
 	}
 
-	
+	/** This method checks if a file of the fileName inputed exists
+	 * @return if  the file exists then the metod returns true, if it does not then the method returns false 
+	 */
+	private boolean doesFileExist(String fileName){
+		File file = new File(fileName);
+		return file.exists();
+	}
 	
 	
 	class GenerateButtonHandler implements ActionListener{
@@ -179,18 +186,7 @@ public class GeneratePanel extends JPanel implements Tabable
 			numberLine.setVisible(!numberLine.isVisible());
 		}
 	}
-	
-	public void refresh() {
-		openButton.setEnabled(doesFileExist(fileNameField.getText()));
-	}
 
-	/** This method checks if a file of the fileName inputed exists
-	 * @return if  the file exists then the metod returns true, if it does not then the method returns false 
-	 */
-	private boolean doesFileExist(String fileName){
-		File file = new File(fileName);
-		return file.exists();
-	}
 }
 
 /*JButton b = new JButton("Dont Click me");

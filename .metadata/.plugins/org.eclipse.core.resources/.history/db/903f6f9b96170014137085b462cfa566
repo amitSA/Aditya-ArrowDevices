@@ -23,7 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 
-public class SolvePanel extends JPanel implements Tabable {
+public class SolvePanel extends JPanel {
 
 	private JLabel [] labels;
 	private JTextField [] textFields;
@@ -33,9 +33,7 @@ public class SolvePanel extends JPanel implements Tabable {
 	private JLabel numLineCaption;
 	
 	private ProblemSolver solver;
-	private FunctionTester tester;
-	
-	
+	FunctionTester tester;
 	
 	public SolvePanel() {
 		super(new GridBagLayout());
@@ -57,6 +55,7 @@ public class SolvePanel extends JPanel implements Tabable {
 		solveButt = new JButton("Solve");
 		solveButt.addActionListener(new SolveButtonHandler());
 		openButt = new JButton("Open File");
+		openButt.setEnabled(doesFileExist(textFields[1].getText()));
 		openButt.addActionListener(new OpenButtonHandler(textFields[1]));
 		
 		numberLine = new JSlider(0,100);
@@ -141,15 +140,10 @@ public class SolvePanel extends JPanel implements Tabable {
 				s.append(newLine+"Total of " + answerSet.size() + " sets printed");
 			}	
 			tester.writeToFile("solution.txt", s.toString());
+			openButt.setEnabled(doesFileExist(textFields[1].getText()));
 		}
 		
 	}
-
-	@Override
-	public void refresh() {
-		solveButt.setEnabled(doesFileExist(textFields[0].getText()));;
-		openButt.setEnabled(doesFileExist(textFields[1].getText()));
-		}
 	
 	
 }

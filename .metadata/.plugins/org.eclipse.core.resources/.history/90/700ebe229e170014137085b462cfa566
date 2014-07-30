@@ -33,7 +33,7 @@ public class MessagePanel extends JPanel implements ActionListener
 		this.setPreferredSize(new Dimension(500,500));
 		this.setVisible(true);
 		
-		timer = new Timer(700,this);
+		timer = new Timer(500,this);
 		timer.start();
 	}
 	
