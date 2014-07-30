@@ -17,13 +17,11 @@ public class main {
 		UIManager.put("ToolTip.font",
 				new FontUIResource("SansSerif", Font.BOLD, 18));
 		
-
-		
 		MessagePanel messPanel = new MessagePanel();
 		
 		JFrame frame = new JFrame("TestTargetProblem");
 		frame.add(messPanel);
-		frame.setPreferredSize(new Dimension(450,450));
+		
 		frame.setResizable(true);
 		frame.setVisible(true);
 		frame.pack();
@@ -32,8 +30,6 @@ public class main {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
-		
-	 
 }
 
 /*

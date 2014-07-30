@@ -23,7 +23,7 @@ public class main {
 		
 		JFrame frame = new JFrame("TestTargetProblem");
 		frame.add(messPanel);
-		frame.setPreferredSize(new Dimension(450,450));
+		
 		frame.setResizable(true);
 		frame.setVisible(true);
 		frame.pack();
