@@ -10,7 +10,7 @@ public class ProblemSolver {
 
 	public ProblemSolver(){};
 																			
-	public void solveProblem(String fileName,double perc)
+	public ArrayList<int[]> solveProblem(String fileName,double perc)
 	{
 		BufferedReader in = null;
 		ArrayList<ArrayList<int[]>> list = new ArrayList<ArrayList<int[]>>();
@@ -39,6 +39,7 @@ public class ProblemSolver {
 				for(int ip = 0;ip<splitLn.length-1;ip++) //JUST CHANGE THIS TO IP<NUMENTRIES
 					temp[ip] = splitLn[ip+1];
 				map.put(temp,Arrays.copyOf(temp,temp.length));
+			    compress(temp,-1);
 				//add the int[] to the sub arrraylist in reverse order, not at the end
 				list.get(numEntries).add(temp);
 			}
@@ -56,36 +57,26 @@ public class ProblemSolver {
 			}
 		}
 		
-		System.out.println("");
-		for(int ip = 0;ip<list.size();ip++){
-			ArrayList<int[]> l = list.get(ip);
-			System.out.print(ip + " Entries: ");
-			for(int op = 0;op<l.size();op++){
-				System.out.print(Arrays.toString(l.get(op))+" . ");
-			}
-			System.out.println("");
-		}
+		
 		
 		int supInd;
-		int subInd;/*there has to be atleast one element in list.size()-1 because 
-		               the list would only have been increased to the last element if 
-		               there was an element in that index to hold */
-		
-		System.exit(-1);
-		
+		int subInd = 0;/*there has to be atleast one element in list.size()-1 because the list would only have 
+						 been increased to the last element if there was an element in that index to hold */
+	
 		firstLoop:
 		for(supInd = list.size()-1;supInd>0;supInd--){
+			
 			ArrayList<int[]> subList = list.get(supInd);
 			for(subInd = 0;subInd<subList.size();subInd++){
 				int [] temp = subList.get(subInd);
-				int count = 0;System.out.println(subList.size());
+				int count = 0;
 				for(int i = 0;i<temp.length;i++){
 					if(temp[i]== -1 || target.isMarked(temp[i])){
 						temp[i] = -1;
 						count++;
 					}
 				}
-				if(count > 0){
+				if(temp.length-count < supInd){
 					subList.remove(subInd); // remove temp
 					list.get(temp.length-count).add(temp);
 					subInd--;
@@ -100,19 +91,53 @@ public class ProblemSolver {
 				}
 			}
 		}
-		
-		/*if(supInd == 0){ // the entire list has been traversed and not perc*totalTargets have been marked
+		if(supInd == 0) // the entire list has been traversed and not perc*totalTargets have been marked
 			return null;
-		} //else
-		ArrayList<int[]> ret*/
 		
-		
-		
-		
+	
+		ArrayList<int[]> ret = new ArrayList<int[]>();
+		for(int i = list.size()-1;i>=supInd;i--){
+			ArrayList<int[]> temp = list.get(i);
+			int max = temp.size()-1;
+			if(i==supInd) max = subInd;
+			for(int ip = 0;ip<=max;ip++)
+				ret.add(map.get(temp.get(ip)));
+		}
+		return ret;
 	}
 	private void checkToExpandList(ArrayList<ArrayList<int[]>> list,int ind){
 		while(ind>list.size()-1)
 			list.add(new ArrayList<int[]>());
+	}
+	
+	//method to help me debug
+	private void printArray(ArrayList<ArrayList<int[]>> list){
+		System.out.println("");
+		for(int ip = 0;ip<list.size();ip++){
+			ArrayList<int[]> l = list.get(ip);
+			System.out.print(ip + " Entries: ");
+			for(int op = 0;op<l.size();op++){
+				System.out.print(Arrays.toString(l.get(op))+" . ");
+			}
+			System.out.println("");
+		}
+	}
+	/**
+	 * $param rep is the variable to replace identical elements in the array
+	 */
+	private void compress(int [] array,int rep){
+		for(int i = 0;i<array.length;i++){
+			if(array[i]==rep)continue;
+			for(int ip = i+1;ip<array.length;ip++){
+				if(array[ip]!=rep && array[ip] == array[i]){
+					array[ip] = rep;
+				}
+			}
+		}
+	}
+	
+	private void varARgTest(String...list){
+		System.out.println(list[0]);
 	}
 }
 
@@ -127,3 +152,11 @@ for(int ip = 0;ip<list.size();ip++){
 	}
 	System.out.println("");
 }*/
+
+
+/*
+if(supInd<2){
+	printArray(list);
+	System.exit(-1);
+}
+*/

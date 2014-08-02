@@ -56,13 +56,9 @@ public class ProblemSolver {
 				e.printStackTrace();
 			}
 		}
-		
-		
-		
 		int supInd;
 		int subInd = 0;/*there has to be atleast one element in list.size()-1 because the list would only have 
 						 been increased to the last element if there was an element in that index to hold */
-	
 		firstLoop:
 		for(supInd = list.size()-1;supInd>0;supInd--){
 			
