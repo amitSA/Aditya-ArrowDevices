@@ -12,6 +12,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -21,7 +22,9 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 
+import Algorithm.FunctionTester;
 import Algorithm.ProblemMaker;
+import Algorithm.Test;
 
 public class GeneratePanel extends JPanel implements Tabable
 {	
@@ -35,11 +38,13 @@ public class GeneratePanel extends JPanel implements Tabable
 	JSlider numberLine;
 	
 	ProblemMaker probMaker;
+	FunctionTester tester;
 	
 	public GeneratePanel(){
 		super(new GridBagLayout());
 	
 		probMaker = new ProblemMaker();
+		tester = new FunctionTester();
 		
 	/*SHOULD I ADD PANELGROUPS INTO THIS PANEL(because of the effects this panels LayoutManager can cause)	
 	 * OR SHOULD I ADD THE JLABELS AND TEXTFIELDS SEPARATELY
@@ -160,20 +165,30 @@ public class GeneratePanel extends JPanel implements Tabable
 			int targetRange = Integer.parseInt(array[0]);
 			int numTests = Integer.parseInt(array[1]);
 			int numConn = Integer.parseInt(array[2]);
+			double perc = numberLine.getValue()/100.0;
 			String fileName = fileNameField.getText();
+			
+			ArrayList<Test> list;
 			genButton.setEnabled(false);
 			if(!cBox.isSelected()){
-				probMaker.generateProblem(numTests, targetRange, numConn, fileName);
-				openButton.setEnabled(true);
+				list = probMaker.generateProblem(numTests, targetRange, numConn, fileName);
 			}else{
 			    String err = "Not enough tests to cover the specified percentage of targets.  \n"
 			    		   + "Make sure that    NumberofTests*ConnPerTests >= TargetRange";
-			    double perc = numberLine.getValue()/100.0;
-				if(probMaker.generateProblem(numTests, targetRange, numConn, perc, fileName))
-					openButton.setEnabled(true);
-				else
+				if((list = probMaker.generateProblem(numTests, targetRange, numConn, perc, fileName)) == null)
 					JOptionPane.showMessageDialog(null, err,"Invalid Input",JOptionPane.ERROR_MESSAGE,null);
-			}
+		    }
+			if(list != null){
+				StringBuilder build = new StringBuilder();
+				String newLine = System.getProperty("line.separator");
+				build.append(numTests + " " + targetRange);
+				for(Test t: list){
+					build.append(newLine);
+					build.append(t.toStringBuilder());
+				}
+				tester.writeToFile(fileName, build);
+				openButton.setEnabled(true);
+		    }
 			genButton.setEnabled(true);	
 		}
 	}

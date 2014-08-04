@@ -10,48 +10,45 @@ import java.util.Arrays;
 public class ProblemMaker {
 
 	/**
-	 * @return returns false if a problem was successfully generated, false if it was not
+	 * @return returns null if a problem was unsuccessfully generated, an ArrayList object if a problem was successful generated. 
 	 */
 	public ArrayList<Test> generateProblem(int numTests,  
 			                           int targetRange,  // range is 0 to targetRange
 			                           int maxEntriesPerTarget,
 			                           String fileName)
    {
-	
-			
+		ArrayList<Test> list = new ArrayList<Test>();
 		for(int i = 0;i<numTests;i++)
 		{
 			int numConnect = (int)(Math.random() * maxEntriesPerTarget) + 1;
 			int [] array = new int[numConnect];
 			for(int ip = 0;ip<numConnect;ip++)
-				array[i] = (int)(Math.random()*targetRange)+1;
-			int ID = numTests + 1;
-			Test t = new Test();
-			
+				array[ip] = (int)(Math.random()*targetRange)+1;
+			int ID = i + 1;
+			Test t = new Test(ID,array);
+			list.add(t);
 		}
-		
-	//	return true;
-		
+		return list;
    }
 
 	/**
-	 * @return returns false if a problem was successfully generated, false if it was not
+	 * @return returns null if a problem was unsuccessfully generated, an ArrayList object if a problem was successful generated. 
 	 */
-	public boolean generateProblem(int numTests,  
+	public ArrayList<Test> generateProblem(int numTests,  
 								        int targetRange,  // range is 0 to targetRange
 								        int maxEntriesPerTarget,
 								        double perc,
 								        String fileName)
     {
 		if(maxEntriesPerTarget*numTests < (targetRange*perc))
-			return false;
+			return null;
 	
 		//constants  CAPITALIZE THEM IF YOU WANT TO
   		float middAvg = (maxEntriesPerTarget+1)/2.0f;
   		int entriesNeeded = (int)(targetRange*perc + 0.5);   //rename this to unique targetsNeeded
   		//
 		//Making and filling the int[] ArrayList
-  		ArrayList<int[]> bGraph = new ArrayList<int[]>();
+  		ArrayList<Test> bGraph = new ArrayList<Test>();
   		int targFilled = 0; 
 		for(int i = 0;i<numTests;i++)
 		{
@@ -62,14 +59,14 @@ public class ProblemMaker {
 			//System.out.println("avg: " + avg + "  offset: " + offset + "   min: " + min + "  max: " + max);
 			int [] bar = new int[(int)(Math.random()*(max-min+1))+min];
 			targFilled+=bar.length;
-			bGraph.add(bar);
+			bGraph.add(new Test(i+1,bar));
 		}
 		ArrayList<int[]> temp = new ArrayList<int[]>();
 		ArrayList<Integer> numberLine = new ArrayList<Integer>(); 
 		for(int i = 1;i<=targetRange;i++)
 			numberLine.add(i);
-		for(int [] b:bGraph)
-			temp.add(b);    // this adds the reference of the int[] in bGraph to the temp arrayList
+		for(Test t:bGraph)
+			temp.add(t.getArray());    // this adds the reference of the int[] in bGraph to the temp arrayList
 		                    /* this way we can modify indices inside the int[] arrays in temp and they will be reflected in bGraph
 		                      although when we remove a int[] from temp, it will not be removed from bGraph */
 		while(temp.size() > 0){
@@ -93,43 +90,7 @@ public class ProblemMaker {
 				temp.remove(ranIndex);
 		}
 		
-		//writing to the file
-		BufferedWriter out = null;
-		try {
-			String newLine  = System.getProperty("line.separator");
-			out = new BufferedWriter(new PrintWriter(fileName));
-			out.write(numTests + " " + targetRange + newLine);
-			for(int i = 0;i<bGraph.size();i++){
-				int [] a = bGraph.get(i);
-				out.write(a.length + " ");
-				for(int ip= 0;ip<a.length;ip++){
-					out.write(a[ip]+"");
-					if(ip!=a.length-1)
-						out.write(" ");						
-				}
-				if(i != bGraph.size()-1)
-					out.write(newLine);
-			}
-			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			return false;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return false;
-		}
-		finally{
-			try {
-				if(out!=null)
-					out.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return true;
-		//System.out.println("");
-		/*for(int [] b : bGraph)
-			System.out.println(Arrays.toString(b));*/
+		return bGraph;
     }
 }
 

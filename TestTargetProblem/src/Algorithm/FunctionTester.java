@@ -1,6 +1,7 @@
 package Algorithm;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -62,6 +63,27 @@ public class FunctionTester {
 		}
 		finally{
 			out.close();
+		}
+	}
+	
+	public void writeToFile(String fileName, StringBuilder data){
+		BufferedWriter out = null;
+		try{
+			out = new BufferedWriter(new PrintWriter(fileName));
+			for(int i = 0;i<data.length();i++)
+				out.write(data.charAt(i));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		finally{
+			try {
+				if(out != null)
+				out.close();
+			} catch (IOException e) {	
+				e.printStackTrace();
+			}
 		}
 	}
 }
