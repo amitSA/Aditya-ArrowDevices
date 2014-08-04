@@ -1,3 +1,5 @@
+package GUI;
+
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

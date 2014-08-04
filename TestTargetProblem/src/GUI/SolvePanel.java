@@ -1,3 +1,5 @@
+package GUI;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Desktop;
@@ -22,6 +24,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
+
+import Algorithm.FunctionTester;
+import Algorithm.ProblemSolver;
 
 public class SolvePanel extends JPanel implements Tabable {
 

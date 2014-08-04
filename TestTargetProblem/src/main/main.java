@@ -1,3 +1,4 @@
+package main;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.ArrayList;
@@ -10,15 +11,15 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.plaf.FontUIResource;
 
+import GUI.MessagePanel;
+
 
 public class main {
 
 	public static void main(String[] args) {
 		UIManager.put("ToolTip.font",
 				new FontUIResource("SansSerif", Font.BOLD, 18));
-		
-
-		
+				
 		MessagePanel messPanel = new MessagePanel();
 		
 		JFrame frame = new JFrame("TestTargetProblem");
@@ -35,7 +36,6 @@ public class main {
 		
 	 
 }
-
 /*
 ProblemMaker probMaker = new ProblemMaker();
 		FunctionTester tester = new FunctionTester();

@@ -1,3 +1,4 @@
+package Algorithm;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -11,47 +12,25 @@ public class ProblemMaker {
 	/**
 	 * @return returns false if a problem was successfully generated, false if it was not
 	 */
-	public boolean generateProblem(int numTests,  
+	public ArrayList<Test> generateProblem(int numTests,  
 			                           int targetRange,  // range is 0 to targetRange
 			                           int maxEntriesPerTarget,
 			                           String fileName)
    {
-		BufferedWriter out = null;
-		try {
-			String newLine  = System.getProperty("line.separator");
-			out = new BufferedWriter(new PrintWriter(fileName));
-			out.write(numTests + " " + targetRange + newLine);
+	
 			
-			for(int i = 0;i<numTests;i++)
-			{
-				int numConnect = (int)(Math.random() * maxEntriesPerTarget) + 1;
-				out.write(numConnect + " ");
-				for(int ip = 0;ip<numConnect;ip++)
-				{
-					int x = (int)(Math.random()*targetRange)+1;
-					out.write(x+"");
-					if(ip != numConnect-1)
-						out.write(' ');
-				}
-				if(i!=numTests-1)
-					out.write(newLine);
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			return false;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return false;
+		for(int i = 0;i<numTests;i++)
+		{
+			int numConnect = (int)(Math.random() * maxEntriesPerTarget) + 1;
+			int [] array = new int[numConnect];
+			for(int ip = 0;ip<numConnect;ip++)
+				array[i] = (int)(Math.random()*targetRange)+1;
+			int ID = numTests + 1;
+			Test t = new Test();
+			
 		}
-		finally{
-			try {
-				if(out!=null)
-					out.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return true;
+		
+	//	return true;
 		
    }
 

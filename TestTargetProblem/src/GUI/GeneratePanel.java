@@ -1,3 +1,5 @@
+package GUI;
+
 import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Dimension;
@@ -18,6 +20,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
+
+import Algorithm.ProblemMaker;
 
 public class GeneratePanel extends JPanel implements Tabable
 {	
