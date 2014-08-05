@@ -103,6 +103,7 @@ public class Problem {
 		BufferedReader in = null;
 		probList = new ArrayList<Test>();
 		try{
+			System.out.println(fileName);
 			in = new BufferedReader(new InputStreamReader(new FileInputStream(fileName)));
 			String [] splitLn = in.readLine().split(" ");
 			this.numOfTests = Integer.parseInt(splitLn[0]);

@@ -26,7 +26,9 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 
 import Algorithm.FunctionTester;
+import Algorithm.Problem;
 import Algorithm.ProblemSolver;
+import Algorithm.Test;
 
 public class SolvePanel extends JPanel implements Tabable {
 
@@ -128,24 +130,29 @@ public class SolvePanel extends JPanel implements Tabable {
 
 		//this method is called when the "Solve" Button is clicked
 		public void actionPerformed(ActionEvent e) {
-			//debugging purposes
+			
+			/*//debugging purposes
 			int [] targ = tester.totalTargetsCovered(textFields[0].getText());
 			System.out.println(targ[0] + "/" + targ[1] + " targets covered");
 			//debugging purposes
-			
+			 */
+			Problem problem = new Problem(textFields[0].getText());
 			String newLine = System.getProperty("line.separator");
 			double perc = numberLine.getValue()/100.0;
-			ArrayList<int[]> answerSet = solver.solveProblem(textFields[0].getText(), perc);
-			StringBuffer s = new StringBuffer();
-			if(answerSet == null)
+			ArrayList<Test> solList = problem.solve(perc);
+			//ArrayList<int[]> answerSet = solver.solveProblem(textFields[0].getText(), perc);
+			StringBuilder s = new StringBuilder();
+			if(solList == null)
 				s.append("The data set did not have enough elements to fill " + (perc*100) + "% of targets"+newLine);
 			else{
 				s.append("The tests which map to at least " + (perc*100) + "% of the targets are:"+newLine+newLine);
-				for(int [] a : answerSet)
-					s.append(Arrays.toString(a) + newLine);
-				s.append(newLine+"Total of " + answerSet.size() + " sets printed");
+				for(Test t : solList){
+					s.append(t.toStringBuilder());
+					s.append(newLine);
+				}
+				s.append(newLine+"Total of " + solList.size() + "/" + problem.getNumberOfTests() + " sets printed");
 			}	
-			tester.writeToFile("solution.txt", s.toString());
+			tester.writeToFile("solution.txt", s);
 		}
 		
 	}
