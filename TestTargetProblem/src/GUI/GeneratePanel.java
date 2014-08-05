@@ -22,9 +22,9 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 
+import obsolete.ProblemMaker;
 import Algorithm.FunctionTester;
 import Algorithm.Problem;
-import Algorithm.ProblemMaker;
 import Algorithm.Test;
 
 public class GeneratePanel extends JPanel implements Tabable

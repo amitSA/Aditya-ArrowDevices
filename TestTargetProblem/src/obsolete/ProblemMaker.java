@@ -1,10 +1,12 @@
-package Algorithm;
+package obsolete;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import Algorithm.Test;
 
 
 public class ProblemMaker {

@@ -10,6 +10,10 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 public class Problem {
 	
@@ -20,17 +24,19 @@ public class Problem {
 	
 	private ArrayList<Test> probList;
 	
-	private HashMap<String,Integer> dict;
+	private HashMap<Integer,String> dict;
+	private int increment;
 	
 								 // range is 0 to targetRange
 	public Problem(int numTests,int targetRange,int maxEntriesPerTarget){
+		init();
 		probList = new ArrayList<Test>();
 		for(int i = 0;i<numTests;i++)
 		{
 			int numConnect = (int)(Math.random() * maxEntriesPerTarget) + 1;
 			int [] array = new int[numConnect];
 			for(int ip = 0;ip<numConnect;ip++)
-				array[ip] = (int)(Math.random()*targetRange)+1;
+				array[ip] = map(((int)(Math.random()*targetRange)+1)+"");
 			int ID = i + 1;
 			Test t = new Test(ID,array);
 			probList.add(t);
@@ -41,6 +47,7 @@ public class Problem {
 	}
 	
 	public Problem(int numTests,int targRange,int maxEntriesPerTarget,double perc){
+		init();
 		this.targetRange = targRange;
 		this.numOfTests = numTests;
 		this.connectsPerTest = maxEntriesPerTarget;
@@ -89,7 +96,7 @@ public class Problem {
 			int i = 0;
 			for(;i<tArray.length;i++)
 				if(tArray[i]==0){
-					tArray[i] = ranTarg;
+					tArray[i] = map(ranTarg+"");
 					break;
 				}
 			if(i==tArray.length-1)
@@ -100,6 +107,7 @@ public class Problem {
 	 * stored in has to be in a specific order
 	*/
 	public Problem(String fileName){
+		init();
 		BufferedReader in = null;
 		probList = new ArrayList<Test>();
 		try{
@@ -114,7 +122,7 @@ public class Problem {
 				int numConns = Integer.parseInt(splitLn[1]);
 				int [] array = new int[numConns];
 				for(int ip = 3;ip<splitLn.length;ip++){
-					array[ip-3] = Integer.parseInt(splitLn[ip]);
+					array[ip-3] = map(splitLn[ip]);
 				}
 				probList.add(new Test(ID,array));
 			}
@@ -193,6 +201,7 @@ public class Problem {
 		return ret;
 	}
 
+	
 	//getter methods
 	public ArrayList<Test> getProblemList(){
 		return probList;
@@ -205,6 +214,9 @@ public class Problem {
 	}
 	public int getMaxConnectionsPerTest(){
 		return connectsPerTest;
+	}
+	public String getMapping(int index){
+		return dict.get(index);
 	}
 	
 	//private (helper) methods
@@ -221,5 +233,23 @@ public class Problem {
 				}
 			}
 		}
+	}
+	private void init(){
+		dict = new HashMap<Integer,String>();
+		increment = 1;
+	}
+	private int map(String value){
+		Set<Entry<Integer,String>>set = dict.entrySet();
+		Iterator<Entry<Integer,String>>iter = set.iterator();
+		while(iter.hasNext()){
+			Entry<Integer,String>e;
+			if((e = iter.next()).getValue().equals(value))
+				return e.getKey();
+		}
+		//return -1;
+		//If the code reaches here then...
+		dict.put(increment,value);
+		increment++;
+		return increment-1;  //INVESTIGATE IN increment++
 	}
 }

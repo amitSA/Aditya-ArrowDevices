@@ -25,9 +25,9 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 
+import obsolete.ProblemSolver;
 import Algorithm.FunctionTester;
 import Algorithm.Problem;
-import Algorithm.ProblemSolver;
 import Algorithm.Test;
 
 public class SolvePanel extends JPanel implements Tabable {
@@ -147,7 +147,11 @@ public class SolvePanel extends JPanel implements Tabable {
 			else{
 				s.append("The tests which map to at least " + (perc*100) + "% of the targets are:"+newLine+newLine);
 				for(Test t : solList){
-					s.append(t.toStringBuilder());
+					s.append(t.getID() + ") ");
+					int [] array = t.getArray();
+					s.append(array.length + " -");
+					for(int opp : array)
+						s.append(" " + problem.getMapping(opp));
 					s.append(newLine);
 				}
 				s.append(newLine+"Total of " + solList.size() + "/" + problem.getNumberOfTests() + " sets printed");
