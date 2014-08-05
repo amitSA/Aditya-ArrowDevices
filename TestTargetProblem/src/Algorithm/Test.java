@@ -29,7 +29,7 @@ public class Test {
 	}
 	public StringBuilder toStringBuilder(){
 		StringBuilder buf = new StringBuilder();
-		buf.append(ID + ")" + " " + conns.length + "-");
+		buf.append(ID + ")" + " " + conns.length + " -");
 		for(int i : conns)
 			buf.append(" " + i);
 		return buf;

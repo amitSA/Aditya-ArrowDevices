@@ -40,8 +40,12 @@ public class Problem {
 		this.connectsPerTest = maxEntriesPerTarget;
 	}
 	
-	public Problem(int targRange, int numTests, int maxEntriesPerTarget, double perc){
-		if(maxEntriesPerTarget*numTests < (targetRange*perc)){
+	public Problem(int numTests,int targRange,int maxEntriesPerTarget,double perc){
+		this.targetRange = targRange;
+		this.numOfTests = numTests;
+		this.connectsPerTest = maxEntriesPerTarget;
+		
+		if(maxEntriesPerTarget*numTests < (targRange*perc)){
 			probList = null;
 			return;
 		}

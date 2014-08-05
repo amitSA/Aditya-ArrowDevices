@@ -23,6 +23,7 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 
 import Algorithm.FunctionTester;
+import Algorithm.Problem;
 import Algorithm.ProblemMaker;
 import Algorithm.Test;
 
@@ -168,21 +169,22 @@ public class GeneratePanel extends JPanel implements Tabable
 			double perc = numberLine.getValue()/100.0;
 			String fileName = fileNameField.getText();
 			
-			ArrayList<Test> list;
+			//ArrayList<Test> list;
+			Problem problem;
 			genButton.setEnabled(false);
 			if(!cBox.isSelected()){
-				list = probMaker.generateProblem(numTests, targetRange, numConn, fileName);
+				problem = new Problem(numTests, targetRange, numConn);
 			}else{
 			    String err = "Not enough tests to cover the specified percentage of targets.  \n"
 			    		   + "Make sure that    NumberofTests*ConnPerTests >= TargetRange";
-				if((list = probMaker.generateProblem(numTests, targetRange, numConn, perc, fileName)) == null)
+				if((problem = new Problem(numTests, targetRange, numConn, perc)).getProblemList() == null)
 					JOptionPane.showMessageDialog(null, err,"Invalid Input",JOptionPane.ERROR_MESSAGE,null);
 		    }
-			if(list != null){
+			if(problem.getProblemList() != null){
 				StringBuilder build = new StringBuilder();
 				String newLine = System.getProperty("line.separator");
 				build.append(numTests + " " + targetRange);
-				for(Test t: list){
+				for(Test t: problem.getProblemList()){
 					build.append(newLine);
 					build.append(t.toStringBuilder());
 				}
