@@ -1,6 +1,7 @@
 package main;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -25,7 +26,7 @@ public class main {
 	 */
 
 	public static void main(String[] args) {
-		UIManager.put("ToolTip.font",
+		/*UIManager.put("ToolTip.font",
 				new FontUIResource("SansSerif", Font.BOLD, 18));
 				
 		MessagePanel messPanel = new MessagePanel();
@@ -38,7 +39,10 @@ public class main {
 		frame.pack();
 		
 		frame.setLocationRelativeTo(null);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);*/
+		
+		System.out.println("SDFsdfsdf");
+		
 	}
 	
 		
